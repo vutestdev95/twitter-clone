@@ -4,6 +4,8 @@ import User from '~/models/schemas/User.schema'
 import userServices from '~/services/users.services'
 import { checkSchema, CustomValidator } from 'express-validator'
 import { validate } from '~/ultils/validator-runner'
+import { RegisterReqBody } from '~/models/requests/User.requests'
+import { hashPassword } from '~/ultils/crypto'
 
 const loginController = (req: Request, res: Response) => {
   res.status(200)
@@ -15,20 +17,26 @@ const loginController = (req: Request, res: Response) => {
   }
 }
 
-const registerController = async (req: Request, res: Response) => {
-  const { email, password } = req.body
+const registerController = async (
+  req: Request<NonNullable<unknown>, NonNullable<unknown>, RegisterReqBody>,
+  res: Response
+) => {
+  const payload = req.body
   try {
     const result = await userServices.register(
       new User({
-        email,
-        password
+        ...payload,
+        date_of_birth: new Date(payload.date_of_birth),
+        password: hashPassword(payload.password),
+        confirm_password: hashPassword(payload.confirm_password)
       })
     )
     if (result.acknowledged) {
-      const userCreated = await databaseServices.users.findOne({
-        _id: result.insertedId
+      return res.status(201).json({
+        accessToken: result.accessToken,
+        refreshToken: result.refreshToken,
+        message: 'User created'
       })
-      return res.status(201).send(userCreated)
     } else {
       return res.status(400).send('User not created')
     }
