@@ -2,6 +2,7 @@ export enum USERS_MESSAGES {
   VALIDATION_ERRORS = 'Validation errors',
   EMAIL_EXISTS = 'Email already exists',
   EMAIL_IS_REQUIRED = 'Email is required',
+  EMAIL_OR_PASSWORD_NOT_CORRECT = 'Email or password is not correct',
   INVALID_EMAIL = 'Invalid email',
   NAME_IS_REQUIRED = 'Name is required',
   NAME_MUST_BE_STRING = 'Name must be a string',
@@ -15,5 +16,9 @@ export enum USERS_MESSAGES {
   CONFIRM_PASSWORD_MUST_MATCH = 'Passwords must match password confirmation',
   CONFIRM_PASSWORD_LENGTH = 'Password confirmation must be between 6 and 50 characters',
   CONFIRM_PASSWORD_MUST_BE_STRONG = 'Password confirmation must be strong',
-  DATE_OF_BIRTH_MUST_BE_DATE = 'Date of birth must be a date'
+  DATE_OF_BIRTH_MUST_BE_DATE = 'Date of birth must be a date',
+  LOGIN_SUCCESS = 'Login Success',
+  LOGIN_FAILED = 'Login failed',
+  USER_CREATED = 'User created',
+  USER_NOT_CREATED = 'User not created'
 }
